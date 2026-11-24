@@ -1,0 +1,52 @@
+# ~/.config/macthemes/config
+#
+# Settings every theme inherits. A theme's own .theme file wins over anything
+# here. Same `key = value` format; lines starting with # are comments.
+#
+# Themes are ~/.config/macthemes/themes/<slug>.theme — lucent's theme files
+# work unchanged: 19 colour roles (crust … pink), `name` and `mode`.
+#
+# ── Appearance ────────────────────────────────────────────────────────────
+# mode             = light | dark | auto        (set per theme)
+# accent           = multicolor | graphite | red | orange | yellow | green |
+#                    blue | purple | pink, or a palette role / hex colour,
+#                    snapped to the nearest of those. Default: mauve.
+# highlight        = text selection colour: Apple accent name, role or hex.
+#                    Default: the theme's accent, lightened.
+#
+# ── Desktop ───────────────────────────────────────────────────────────────
+# wallpaper        = gradient | solid | none | /path/to/image
+#                    gradient and solid are generated from the palette.
+#                    Relative paths resolve against the themes folder.
+wallpaper = gradient
+#
+# ── Interface ─────────────────────────────────────────────────────────────
+# sidebar_icons    = small | medium | large
+# scrollbars       = automatic | scrolling | always
+# menubar_autohide = yes | no
+#
+# ── Dock (restarted only when something changes) ──────────────────────────
+# dock_autohide      = yes | no
+# dock_size          = 16–128
+# dock_magnification = yes | no
+# dock_large_size    = 16–128
+# dock_position      = left | bottom | right
+#
+# ── Terminal ──────────────────────────────────────────────────────────────
+# kitty            = yes writes ~/.config/kitty/macthemes.conf and reloads
+#                    kitty. Add `include macthemes.conf` to kitty.conf, after
+#                    any other colour include it should override.
+# terminal         = another theme's slug, for the terminal palette
+# mono             = kitty's font_family
+# terminal_alpha   = kitty's background_opacity
+kitty = no
+#
+# ── Anything else ─────────────────────────────────────────────────────────
+# defaults = <domain> <key> -bool|-int|-float|-string <value>
+#   Repeatable. Lines here run before a theme's own. Dock and Finder are
+#   restarted when their domain changes. For example:
+# defaults = com.apple.finder AppleShowAllFiles -bool true
+# defaults = -g AppleReduceDesktopTinting -bool true
+#
+# Note: macOS has no supported way to change the system UI font, so `font`
+# only affects the app's preview.
