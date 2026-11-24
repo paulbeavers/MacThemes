@@ -19,6 +19,8 @@ cp "$BIN/MacThemesApp" "$APP/Contents/MacOS/MacThemes"
 cp "$BIN/macthemes" dist/macthemes
 cp themes/*.theme "$APP/Contents/Resources/themes/"
 cp config.example "$APP/Contents/Resources/config.example"
+# Regenerate with: swift tools/make-icon.swift
+cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -29,6 +31,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
     <key>CFBundleDisplayName</key>        <string>MacThemes</string>
     <key>CFBundleIdentifier</key>         <string>io.github.paulbeavers.macthemes</string>
     <key>CFBundleExecutable</key>         <string>MacThemes</string>
+    <key>CFBundleIconFile</key>           <string>AppIcon</string>
     <key>CFBundlePackageType</key>        <string>APPL</string>
     <key>CFBundleShortVersionString</key> <string>0.1.0</string>
     <key>CFBundleVersion</key>            <string>1</string>
