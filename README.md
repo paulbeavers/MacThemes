@@ -56,6 +56,19 @@ macthemes list | current | show <theme> | apply <theme>
 macthemes wallpaper <theme> out.png [WxH]
 ```
 
+## Windows, borders and Terminal
+
+macOS can't recolour other apps' windows, so these get the theme onto them:
+
+- **`window_tinting = yes`** lets macOS tint window backgrounds and sidebars
+  with the wallpaper, which MacThemes generates from the palette.
+- **`borders = yes`** drives [JankyBorders](https://github.com/FelixKratz/JankyBorders)
+  for lucent-style window borders (mauve→blue on the focused window).
+  Install it with `brew install FelixKratz/formulae/borders`.
+- **`terminal_app = yes`** gives each theme a Terminal.app profile, made from
+  your current default profile with the theme's colours, and switches open
+  tabs to it.
+
 ## Limits
 
 - **Accent**: macOS offers only eight accent colours, so a theme's colour is

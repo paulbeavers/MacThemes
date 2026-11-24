@@ -35,6 +35,10 @@ public struct StepResult: Identifiable {
 ///   dock_magnification yes | no
 ///   dock_large_size  16–128
 ///   dock_position    left | bottom | right
+///   window_tinting   yes | no — tint window backgrounds with the wallpaper
+///   glass_tint       0–1, Liquid Glass from clear to tinted
+///   borders          yes | no — JankyBorders window borders (see Borders)
+///   terminal_app     yes | no — a Terminal.app profile (see TerminalApp)
 ///   kitty            yes | no — write the palette for kitty
 ///   defaults         <domain> <key> -<type> <value>, any number of times
 public enum Applier {
@@ -66,11 +70,29 @@ public enum Applier {
             return changed ? "set" : "unchanged"
         })
 
+        // Window backgrounds
+        if let tint = theme.bool("window_tinting") {
+            steps.append(Step(title: "Window tinting", detail: tint ? "Tint windows with the wallpaper" : "Off") {
+                let c = System.writeDefault("-g", "AppleReduceDesktopTinting", "bool", tint ? "false" : "true")
+                System.post(["AppleReduceDesktopTintingChanged"])
+                return c ? "set" : "unchanged"
+            })
+        }
+        if let g = theme["glass_tint"].flatMap(Double.init) {
+            let v = min(max(g, 0), 1)
+            steps.append(Step(title: "Glass tint", detail: String(format: "%.2f (0 clear – 1 tinted)", v)) {
+                System.writeDefault("-g", "NSGlassTintAmount", "float", "\(v)")
+                    ? "set (apps pick it up as they relaunch)" : "unchanged"
+            })
+        }
+
         // Global UI preferences
         if let v = theme["sidebar_icons"]?.lowercased(),
            let n = ["small": 1, "medium": 2, "large": 3][v] {
             steps.append(Step(title: "Sidebar icon size", detail: v.capitalized) {
-                System.writeDefault("-g", "NSTableViewDefaultSizeMode", "int", "\(n)") ? "set (relaunch apps to see it)" : "unchanged"
+                let c = System.writeDefault("-g", "NSTableViewDefaultSizeMode", "int", "\(n)")
+                System.post(["AppleSideBarDefaultIconSizeChanged"])
+                return c ? "set" : "unchanged"
             })
         }
         if let v = theme["scrollbars"]?.lowercased(),
@@ -126,6 +148,21 @@ public enum Applier {
             }
             steps.append(Step(title: "Wallpaper", detail: label) {
                 try Wallpaper.apply(theme) ?? "unchanged"
+            })
+        }
+
+        // Window borders
+        if theme.bool("borders") == true {
+            steps.append(Step(title: "Window borders", detail: Borders.describe(theme)) {
+                try Borders.apply(theme)
+            })
+        }
+
+        // Terminal.app
+        if theme.bool("terminal_app") == true {
+            let src = theme["terminal"].map { ", palette from \($0)" } ?? ""
+            steps.append(Step(title: "Terminal", detail: "profile “\(TerminalApp.profileName(theme))”" + src) {
+                try TerminalApp.apply(theme)
             })
         }
 

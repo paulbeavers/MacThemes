@@ -20,6 +20,24 @@
 #                    Relative paths resolve against the themes folder.
 wallpaper = gradient
 #
+# ── Window backgrounds ────────────────────────────────────────────────────
+# macOS can't recolour other apps' windows, but it can tint their
+# backgrounds and sidebars with the wallpaper — which MacThemes generates
+# from the palette.
+# window_tinting   = yes | no
+# glass_tint       = 0–1, Liquid Glass from clear to tinted (experimental:
+#                    apps pick it up as they relaunch)
+window_tinting = yes
+#
+# ── Window borders (JankyBorders) ─────────────────────────────────────────
+# borders          = yes draws lucent-style borders round every window.
+#                    Needs: brew install FelixKratz/formulae/borders
+# border_active    = one colour, or two for a gradient. Default: mauve blue
+# border_inactive  = default: the theme's `border`, else surface0
+# border_width     = 5
+# border_style     = round | square
+borders = no
+#
 # ── Interface ─────────────────────────────────────────────────────────────
 # sidebar_icons    = small | medium | large
 # scrollbars       = automatic | scrolling | always
@@ -33,12 +51,18 @@ wallpaper = gradient
 # dock_position      = left | bottom | right
 #
 # ── Terminal ──────────────────────────────────────────────────────────────
+# terminal_app     = yes gives each theme a Terminal.app profile, made from
+#                    your current default profile with the theme's colours,
+#                    and switches open tabs to it. Loading a new or changed
+#                    profile briefly opens a Terminal window.
+terminal_app = no
+#
 # kitty            = yes writes ~/.config/kitty/macthemes.conf and reloads
 #                    kitty. Add `include macthemes.conf` to kitty.conf, after
 #                    any other colour include it should override.
 # terminal         = another theme's slug, for the terminal palette
-# mono             = kitty's font_family
-# terminal_alpha   = kitty's background_opacity
+# mono             = the terminal font (kitty and Terminal.app)
+# terminal_alpha   = the terminal's background opacity
 kitty = no
 #
 # ── Anything else ─────────────────────────────────────────────────────────
@@ -46,7 +70,7 @@ kitty = no
 #   Repeatable. Lines here run before a theme's own. Dock and Finder are
 #   restarted when their domain changes. For example:
 # defaults = com.apple.finder AppleShowAllFiles -bool true
-# defaults = -g AppleReduceDesktopTinting -bool true
+# defaults = com.apple.finder ShowPathbar -bool true
 #
 # Note: macOS has no supported way to change the system UI font, so `font`
 # only affects the app's preview.
